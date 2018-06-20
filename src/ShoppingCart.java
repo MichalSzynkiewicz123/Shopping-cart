@@ -12,14 +12,49 @@ public class ShoppingCart {
 	
 	public static void main(String[] args) {
 		
+		createAvaibleFruits();
+		DecimalFormat df = new DecimalFormat("#.##");
+		
+		List<String> receipt =  Arrays.asList("Apple","Apple","Apple","Orange","Orange","Orange");
+		System.out.print("Total of 3 apples and 3 oranges with discount should be 1.7 ="+df.format(total(listOfFruits(avaibleFruits, receipt)))+"\n");
+		
+		receipt =  Arrays.asList("Orange","Orange","Orange");
+		System.out.print("Total of 3  oranges with discount should be 0.5 ="+df.format(total(listOfFruits(avaibleFruits, receipt)))+"\n");
+		
+		
+		receipt =  Arrays.asList("Apple","Apple","Apple");
+		System.out.print("Total of 3  apples with discount should be 1.2 ="+df.format(total(listOfFruits(avaibleFruits, receipt)))+"\n");
+		
+		
+		changePriceApple(0.90f);
+		receipt =  Arrays.asList("Apple","Apple","Apple");
+		System.out.print("Total of 3 apples after the change of price with discount should be 1.8 ="+df.format(total(listOfFruits(avaibleFruits, receipt)))+"\n");	
+		
+		
+		changePriceOrange(0.90f);
+		receipt =  Arrays.asList("Orange","Orange","Orange");
+		System.out.print("Total of 3 oranges after the change of price with discount should be 1.8 ="+df.format(total(listOfFruits(avaibleFruits, receipt)))+"\n");
+		
+		
+		receipt =  Arrays.asList("Orange","Orange","Orange","Apple","Apple","Apple");
+		System.out.print("Total of 3 oranges and 3 apples after the change of price with discount should be 3.6 ="+df.format(total(listOfFruits(avaibleFruits, receipt)))+"\n");
+		
+	}
+
+	private static void changePriceOrange(float newPrice) {
+		Orange.price = newPrice;
+		createAvaibleFruits();
+	}
+
+	private static void changePriceApple(float newPrice) {
+		Apple.price = newPrice;
+		createAvaibleFruits();
+	}
+
+	private static void createAvaibleFruits() {
 		avaibleFruits = new ArrayList<>();
 		avaibleFruits.add(new Apple());
 		avaibleFruits.add(new Orange());
-		
-		List<String> receipt =  Arrays.asList("Apple","Apple","Apple","Orange","Orange","Orange");
-		
-		DecimalFormat df = new DecimalFormat("#.##");
-		System.out.print(df.format(total(listOfFruits(avaibleFruits, receipt))));
 	}
 
 	// create list of fruits objects, relying on available fruits and array of string
@@ -47,8 +82,8 @@ public class ShoppingCart {
 			}
 			// adding discouts to total price
 			getNuberOfFruits(fruits);
-			total = total - (applesDiscount(fruits) * 0.60f);  
-			total = total - (orangeDiscount(fruits) * 0.25f);  
+			total = total - (applesDiscount(fruits) * Apple.price);  
+			total = total - (orangeDiscount(fruits) * Orange.price);  
 			return total;
 		}
 		return 0;

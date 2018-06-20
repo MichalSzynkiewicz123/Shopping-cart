@@ -18,4 +18,10 @@ public class Fruits {
 		return price;
 	}
 
+	public void setPrice(float price) {
+		this.price = price;
+	}
+	
+	
+
 }
